@@ -11,6 +11,7 @@ class OnBoardingModel {
     required this.title,
     required this.subTitle,
   });
+  // ignore: non_constant_identifier_names
   static List<OnBoardingModel> OnBoardingScreen = [
     OnBoardingModel(
       imgPath: AppAssets.pic1,

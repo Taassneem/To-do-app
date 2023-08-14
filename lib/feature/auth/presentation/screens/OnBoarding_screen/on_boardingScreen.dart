@@ -1,14 +1,17 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:to_do_app/core/common/common.dart';
 import 'package:to_do_app/core/database/cache_helper.dart';
-// import 'package:to_do_app/core/utils/app_assets.dart';
 import 'package:to_do_app/core/utils/app_string.dart';
+import 'package:to_do_app/core/widgets/custom_elevated_button.dart';
 import 'package:to_do_app/feature/auth/data/model/on_boarding_model.dart';
 
 import '../../../../../core/services/service_locator.dart';
 import '../../../../../core/utils/app_color.dart';
-import '../../../../task/home_screen/home_screen.dart';
+import '../../../../../core/widgets/custom_text_button.dart';
+import '../../../../task/presentation/screens/home_screen/home_screen.dart';
 
 // ignore: must_be_immutable
 class OnBoardingScreen extends StatelessWidget {
@@ -30,12 +33,11 @@ class OnBoardingScreen extends StatelessWidget {
                   Row(
                     children: [
                       index != 2
-                          ? TextButton(
+                          ? CustomTextButton(
+                              text: AppString.skip,
                               onPressed: () {
                                 controller.jumpToPage(2);
-                              },
-                              child: Text(AppString.skip,
-                                  style: Theme.of(context).textTheme.bodySmall))
+                              })
                           : const SizedBox(
                               height: 50,
                             ),
@@ -64,49 +66,38 @@ class OnBoardingScreen extends StatelessWidget {
                   Text(OnBoardingModel.OnBoardingScreen[index].subTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.displaySmall),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 65),
                   Row(
                     children: [
                       index != 0
-                          ? TextButton(
+                          ? CustomTextButton(
+                              text: AppString.back,
                               onPressed: () {
                                 controller.previousPage(
                                     duration: const Duration(milliseconds: 300),
                                     curve: Curves.slowMiddle);
-                              },
-                              child: Text(AppString.back,
-                                  style: Theme.of(context).textTheme.bodySmall))
+                              })
                           : Container(),
                       const Spacer(),
                       index != 2
-                          ? ElevatedButton(
+                          ? CustomElevatedButton(
+                              text: AppString.next,
                               onPressed: () {
                                 controller.nextPage(
                                     duration: const Duration(milliseconds: 300),
                                     curve: Curves.slowMiddle);
-                              },
-                              style:
-                                  Theme.of(context).elevatedButtonTheme.style,
-                              child: Text(AppString.next,
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall))
-                          : ElevatedButton(
+                              })
+                          : CustomElevatedButton(
+                              text: AppString.getStarted,
                               onPressed: () async {
-                               await sl <CacheHelper>()
+                                await sl<CacheHelper>()
                                     .saveData(key: 'onBoarding', value: true)
-                                    .then((value) {Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => const HomeScreen()));});
-                                
-                              },
-                              style:
-                                  Theme.of(context).elevatedButtonTheme.style,
-                              child: Text(AppString.getStarted,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  )))
+                                    .then((value) {
+                                  navigate(
+                                      context: context,
+                                      screen: const HomeScreen());
+                                });
+                              })
                     ],
                   )
                 ],

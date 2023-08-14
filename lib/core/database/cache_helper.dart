@@ -2,14 +2,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CacheHelper That's Connect and Talk to local database.
 
 class CacheHelper {
-   late SharedPreferences sharedPreferences;
+  late SharedPreferences sharedPreferences;
 
   //Here The Initialize of cache .
 
-   init() async {
+  init() async {
     sharedPreferences = await SharedPreferences.getInstance();
-      
-
   }
 
   String? getDataString({

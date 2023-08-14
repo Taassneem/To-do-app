@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_app/core/utils/app_string.dart';
 import 'package:to_do_app/feature/auth/presentation/screens/OnBoarding_screen/on_boardingScreen.dart';
-import 'package:to_do_app/feature/task/home_screen/home_screen.dart';
+import 'package:to_do_app/feature/task/presentation/screens/home_screen/home_screen.dart';
 
 import '../../../../../core/database/cache_helper.dart';
 import '../../../../../core/services/service_locator.dart';
@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigate();
   }
 
+  // ignore: non_constant_identifier_names
   void Navigate() {
     bool isVisited = sl<CacheHelper>().getData(key: AppString.onBoardingKey)??false;
     Future.delayed(const Duration(seconds: 3), () {
