@@ -15,7 +15,7 @@ void main() async {
   await sl<CacheHelper>().init();
   sl<SqfliteHelper>().initDatabase();
   runApp(BlocProvider(
-    create: (context) => TaskCubit(),
+    create: (context) => TaskCubit()..getTasks(),
     child: const MyApp(),
   ));
 }

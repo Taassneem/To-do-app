@@ -49,10 +49,7 @@ class HomeScreen extends StatelessWidget {
                     dayTextStyle: Theme.of(context).textTheme.bodySmall!,
                     monthTextStyle: Theme.of(context).textTheme.bodySmall!,
                     onDateChange: (date) {
-                      // New date selected
-                      // setState(() {
-                      //   _selectedValue = date;
-                      // });
+                      BlocProvider.of<TaskCubit>(context).getSelectedDate(date);
                     },
                   ),
                   const SizedBox(
@@ -81,13 +78,32 @@ class HomeScreen extends StatelessWidget {
                                           padding: const EdgeInsets.all(24),
                                           child: Column(
                                             children: [
-                                              SizedBox(
-                                                height: 48,
-                                                width: double.infinity,
-                                                child: CustomElevatedButton(
-                                                    text: AppString.completed,
-                                                    onPressed: () {}),
-                                              ),
+                                              BlocProvider.of<TaskCubit>(
+                                                              context)
+                                                          .homeScreen[index]
+                                                          .isComplete ==
+                                                      1
+                                                  ? Container()
+                                                  : SizedBox(
+                                                      height: 48,
+                                                      width: double.infinity,
+                                                      child:
+                                                          CustomElevatedButton(
+                                                              text: AppString
+                                                                  .completed,
+                                                              onPressed: () {
+                                                                BlocProvider.of<
+                                                                            TaskCubit>(
+                                                                        context)
+                                                                    .updateTask(BlocProvider.of<TaskCubit>(
+                                                                            context)
+                                                                        .homeScreen[
+                                                                            index]
+                                                                        .id);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }),
+                                                    ),
                                               const SizedBox(
                                                 height: 24,
                                               ),
@@ -98,7 +114,17 @@ class HomeScreen extends StatelessWidget {
                                                     text: AppString.deleteTask,
                                                     backgroundColor:
                                                         AppColors.red,
-                                                    onPressed: () {}),
+                                                    onPressed: () {
+                                                      BlocProvider.of<
+                                                                  TaskCubit>(
+                                                              context)
+                                                          .deleteTask(BlocProvider
+                                                                  .of<TaskCubit>(
+                                                                      context)
+                                                              .homeScreen[index]
+                                                              .id);
+                                                      Navigator.pop(context);
+                                                    }),
                                               ),
                                               const SizedBox(
                                                 height: 24,
@@ -108,7 +134,9 @@ class HomeScreen extends StatelessWidget {
                                                 width: double.infinity,
                                                 child: CustomElevatedButton(
                                                     text: AppString.cancel,
-                                                    onPressed: () {}),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    }),
                                               ),
                                             ],
                                           ),
@@ -197,7 +225,7 @@ class taskComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 128,
+      height: 140,
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -209,7 +237,7 @@ class taskComponent extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   taskModel.title,
@@ -247,7 +275,9 @@ class taskComponent extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                taskModel.isComplete ==1? AppString.createTask : AppString.toDo,
+                taskModel.isComplete == 1
+                    ? AppString.taskCompleted
+                    : AppString.toDo,
                 style: Theme.of(context).textTheme.displaySmall,
               ),
             )

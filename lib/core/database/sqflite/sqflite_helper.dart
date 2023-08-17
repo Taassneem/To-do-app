@@ -30,18 +30,6 @@ class SqfliteHelper {
               VALUES
               ('${model.title}','${model.note}','${model.date}','${model.startTime}','${model.endTime}','${model.color}','${model.isComplete}')
               ''');
-//     return await db.rawInsert('''
-//     INSERT INTO Tasks (title, note, date, startTime, endTime, color, isComplete)
-//     VALUES ('${model.title}','${model.note}','${model.date}','${model.startTime}','${model.endTime}','${model.color}','${model.isComplete}')
-// ''', [
-//       model.title,
-//       model.note,
-//       model.date,
-//       model.startTime,
-//       model.endTime,
-//       model.color,
-//       model.isComplete
-//     ]);
   }
 
   Future<int> updateDB(int id) async {

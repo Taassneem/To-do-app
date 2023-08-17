@@ -17,6 +17,7 @@ class TaskCubit extends Cubit<TaskState> {
   TextEditingController noteController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   DateTime currentDate = DateTime.now();
+  DateTime selcetedDate = DateTime.now();
   String startTime = DateFormat('hh:mm a').format(DateTime.now());
   String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 30)));
@@ -75,8 +76,7 @@ class TaskCubit extends Cubit<TaskState> {
     emit(insertTasksLoadingState());
 
     try {
-    await  sl<SqfliteHelper>().insertToDB(TaskModel(
-          
+      await sl<SqfliteHelper>().insertToDB(TaskModel(
           note: noteController.text,
           title: titleController.text,
           endTime: endTime,
@@ -84,12 +84,59 @@ class TaskCubit extends Cubit<TaskState> {
           isComplete: 0,
           color: currentIndex,
           date: DateFormat.yMd().format(currentDate)));
+      getTasks();
       emit(insertTasksSuccesState());
       titleController.clear();
       noteController.clear();
     } catch (e) {
       emit(insertTasksFailsState());
     }
+  }
+
+  void getTasks() async {
+    emit(getTasksLoadingState());
+    await sl<SqfliteHelper>().getFromDB().then((value) {
+      homeScreen = value
+          .map((e) => TaskModel.fromJson(e))
+          .toList()
+          .where(
+              (element) => element.date == DateFormat.yMd().format(selcetedDate))
+          .toList();
+      emit(getTasksSuccesState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(getTasksFailsState());
+    });
+  }
+
+  void updateTask(id) async {
+    emit(updateTasksLoadingState());
+    await sl<SqfliteHelper>().updateDB(id).then((value) {
+      emit(updateTasksSuccesState());
+      getTasks();
+    }).catchError((e) {
+      print(e.toString());
+      emit(updateTasksFailsState());
+    });
+  }
+
+  void deleteTask(id) async {
+    emit(deleteTasksLoadingState());
+    await sl<SqfliteHelper>().deleteFromDB(id).then((value) {
+      emit(deleteTasksSuccesState());
+      getTasks();
+    }).catchError((e) {
+      print(e.toString());
+      emit(deleteTasksFailsState());
+    });
+  }
+
+  void getSelectedDate(date) {
+    emit(getSelecteDateLoadingState());
+    selcetedDate = date;
+   
+    emit(getSelecteDateSuccesState());
+     getTasks();
   }
 
   List<TaskModel> homeScreen = [];

@@ -1,4 +1,3 @@
-
 class TaskModel {
   final int? id;
   final String title;
@@ -9,13 +8,23 @@ class TaskModel {
   final int isComplete;
   final int color;
   TaskModel(
-      {required this.date,  this.id,
+      {required this.date,
+      this.id,
       required this.note,
       required this.title,
       required this.endTime,
       required this.startTime,
       required this.isComplete,
       required this.color});
-      // ignore: non_constant_identifier_names
-      
+  factory TaskModel.fromJson(Map<String, dynamic> jsonData) {
+    return TaskModel(
+      id: jsonData["id"],
+        date: jsonData['date'],
+        note: jsonData['note'],
+        title: jsonData['title'],
+        endTime: jsonData['endTime'],
+        startTime: jsonData['startTime'],
+        isComplete: jsonData['isComplete'],
+        color: jsonData['color']);
+  }
 }
