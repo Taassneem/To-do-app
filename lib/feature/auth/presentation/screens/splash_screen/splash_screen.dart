@@ -4,7 +4,7 @@ import 'package:to_do_app/core/utils/app_string.dart';
 import 'package:to_do_app/feature/auth/presentation/screens/OnBoarding_screen/on_boardingScreen.dart';
 import 'package:to_do_app/feature/task/presentation/screens/home_screen/home_screen.dart';
 
-import '../../../../../core/database/cache_helper.dart';
+import '../../../../../core/database/cache/cache_helper.dart';
 import '../../../../../core/services/service_locator.dart';
 import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_color.dart';

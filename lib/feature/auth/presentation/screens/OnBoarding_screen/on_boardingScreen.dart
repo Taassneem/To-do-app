@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:to_do_app/core/common/common.dart';
-import 'package:to_do_app/core/database/cache_helper.dart';
+import 'package:to_do_app/core/database/cache/cache_helper.dart';
 import 'package:to_do_app/core/utils/app_string.dart';
 import 'package:to_do_app/core/widgets/custom_elevated_button.dart';
 import 'package:to_do_app/feature/auth/data/model/on_boarding_model.dart';
@@ -39,12 +39,12 @@ class OnBoardingScreen extends StatelessWidget {
                                 controller.jumpToPage(2);
                               })
                           : const SizedBox(
-                              height: 50,
+                              height: 47,
                             ),
                     ],
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 13,
                   ),
                   Image.asset(OnBoardingModel.OnBoardingScreen[index].imgPath),
                   const SizedBox(

@@ -19,6 +19,8 @@ class AppString {
   static const String addTask = 'Add Task';
   static const String title = 'Title';
   static const String titleHint = 'Enter title here';
+  static const String titleErrorMsg = 'Enter valid title ';
+  static const String noteErrorMsg = 'Enter valid note';
   static const String note = 'Note';
   static const String noteHint = 'Enter note here';
   static const String date = 'Date';
